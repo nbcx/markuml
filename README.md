@@ -1,0 +1,2 @@
+# markuml
+让marked支持mermaid，flowchart和sequence-diagram库，达到让markdown显示uml视图
