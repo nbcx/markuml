@@ -23,7 +23,18 @@
                 that.empty();
                 Diagram.parse(parse_text).drawSVG("sequence-diagram-draw-"+index, options);
             });
-        }
+        },
+
+        /**
+         * http://www.gravizo.com/
+         * @param options
+         */
+        gravizo: function( options ) {
+            this.each(function(index,element) {
+                var that = $(element);
+                that.parent().replaceWith("<p></p><img src='https://g.gravizo.com/svg?"+that.text()+"' /></p>");
+            });
+        },
     };
 
     $.fn.markUml = function( method ) {

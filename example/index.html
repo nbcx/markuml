@@ -23,6 +23,8 @@
         .markdown-body img{
             width: auto;
             max-width: 100%;
+            webkit-box-shadow: unset;
+            box-shadow:none;
         }
     </style>
 </head>
@@ -37,16 +39,14 @@
 
 <!-- Optional JavaScript -->
 <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.nb.cx/jquery/jquery-3.3.1.min.js"></script>
 <script src="https://cdn.bootcss.com/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.13.1/highlight.min.js"></script>
 <script src="https://cdn.bootcss.com/marked/0.5.0/marked.js"></script>
 
 <!-- UML流程图 -->
 <script src="//cdn.nb.cx/raphael/2.2.8/raphael.min.js"></script>
 <script src="//cdn.nb.cx/flowchart/1.11.3/flowchart.min.js"></script>
-<script src="/jquery.flowchart.md.js?v=<?=time()?>"></script>
 
 <!-- UML序列图 -->
 <script src="https://cdn.nb.cx/webfontloader/1.6.28/webfontloader.js"></script>
@@ -56,51 +56,67 @@
 <link href="https://cdn.nb.cx/js-sequence-diagrams/2.0.1/sequence-diagram-min.css" rel="stylesheet">
 
 <script src="https://cdn.nb.cx/mermaid/8.0.0/mermaid.min.js"></script>
+
+
+<script src="../markuml.js?v=1"></script>
 <script>
-    hljs.initHighlightingOnLoad();
     $(document).ready(function(){
-        $("#content").html(marked({$markdown}));
-        $('.language-flow').markUml('flow',{
-            'x': 0,
-            'y': 0,
-            'line-width': 3,
-            'line-length': 50,
-            'text-margin': 10,
-            'font-size': 14,
-            'font-color': 'black',
-            'line-color': 'black',
-            'element-color': 'black',
-            'fill': 'white',
-            'yes-text': 'yes',
-            'no-text': 'no',
-            'arrow-end': 'block',
-            'scale': 1,
-            // style symbol types
-            'symbols': {
-                'start': {
-                    'font-color': 'red',
-                    'element-color': 'green',
-                    'fill': 'yellow'
-                },
-                'end':{
-                    'class': 'end-element'
-                }
-            },
-            // even flowstate support ;-)
-            'flowstate' : {
-                'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
-                'current' : {'fill' : 'yellow', 'font-color' : 'red', 'font-weight' : 'bold'},
-                'future' : { 'fill' : '#FFFF99'},
-                'request' : { 'fill' : 'blue'},
-                'invalid': {'fill' : '#444444'},
-                'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : 'APPROVED', 'no-text' : 'n/a' },
-                'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : 'n/a', 'no-text' : 'REJECTED' }
+
+        $.ajax({
+            url: "test.md",//文件位置
+            type: "GET",//请求方式为get
+            dataType: "text",
+            success: function(data) {//请求成功完成后要执行的方法
+                //$("#content").html(marked(data));
+                //alert(data)
+                $("#content").html(marked(data));
+
+                $('.language-flow').markUml('flow',{
+                    'x': 0,
+                    'y': 0,
+                    'line-width': 3,
+                    'line-length': 50,
+                    'text-margin': 10,
+                    'font-size': 14,
+                    'font-color': 'black',
+                    'line-color': 'black',
+                    'element-color': 'black',
+                    'fill': 'white',
+                    'yes-text': 'yes',
+                    'no-text': 'no',
+                    'arrow-end': 'block',
+                    'scale': 1,
+                    // style symbol types
+                    'symbols': {
+                        'start': {
+                            'font-color': 'red',
+                            'element-color': 'green',
+                            'fill': 'yellow'
+                        },
+                        'end':{
+                            'class': 'end-element'
+                        }
+                    },
+                    // even flowstate support ;-)
+                    'flowstate' : {
+                        'past' : { 'fill' : '#CCCCCC', 'font-size' : 12},
+                        'current' : {'fill' : 'yellow', 'font-color' : 'red', 'font-weight' : 'bold'},
+                        'future' : { 'fill' : '#FFFF99'},
+                        'request' : { 'fill' : 'blue'},
+                        'invalid': {'fill' : '#444444'},
+                        'approved' : { 'fill' : '#58C4A3', 'font-size' : 12, 'yes-text' : 'APPROVED', 'no-text' : 'n/a' },
+                        'rejected' : { 'fill' : '#C45879', 'font-size' : 12, 'yes-text' : 'n/a', 'no-text' : 'REJECTED' }
+                    }
+                });
+
+                $('.language-sequence').markUml('sequence');
+
+                $('.language-mermaid').markUml({startOnLoad:true});
+
+                $('.language-gravizo').markUml('gravizo');
             }
-        });
+        })
 
-        $('.language-sequence').markUml('sequence');
-
-        $('.language-mermaid').markUml({startOnLoad:true});
     })
 </script>
 </body>

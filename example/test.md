@@ -1,5 +1,7 @@
 # 通行证系统
 
+
+## flow
 ```flow
 st=>start: Start|past:>http://www.google.com[blank]
 e=>end: End|future:>http://www.google.com
@@ -51,11 +53,15 @@ cond(no)->sub2(right)->op1
 st@>op1({"stroke":"Red"})@>sub1({"stroke":"Red"})@>cond({"stroke":"Red"})@>io({"stroke":"Red"})@>op2({"stroke":"Red"})@>cond2({"stroke":"Red"})@>sub3({"stroke":"Red"})@>sub4({"stroke":"Red"})@>io2({"stroke":"Red"})@>e({"stroke":"Red","stroke-width":6,"arrow-end":"classic-wide-long"})
 ```
 
+## sequence
 ```sequence
 SDK->GameService: Hello GameService, how are you?
 Note right of GameService: GameService thinks
 GameService-->MoyoServer: I am good thanks!
 ```
+
+## mermaid
+
 
 ```mermaid
 graph LR
@@ -76,3 +82,31 @@ gantt
     another task      : 24d
 ```
 
+## gravizo
+
+```gravizo
+/**
+*Structural Things
+*@opt commentname
+*@note Notes can
+*be extended to
+*span multiple lines
+*/
+class Structural{}
+
+/**
+*@opt all
+*@note Class
+*/
+class Counter extends Structural {
+        static public int counter;
+        public int getCounter%28%29;
+}
+
+/**
+*@opt shape activeclass
+*@opt all
+*@note Active Class
+*/
+class RunningCounter extends Counter{}
+```
